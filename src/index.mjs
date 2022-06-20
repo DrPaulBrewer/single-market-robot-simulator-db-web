@@ -20,6 +20,39 @@ export function setBaseURL(url){
 
 const manifestFilename = 'manifest.json';
 
+export class StudyFolderForWeb extends StudyFolder {
+  async search(name){
+    if (!this.manifest){
+      this.manifest = await this.download({name: manifestFilename});
+    }
+    if (name===undefined){
+      return this.manifest;
+    }
+    const entry = this.manifest.find((f)=>(f.name===name));
+    if (entry)
+      return [entry];
+    return [];
+  }
+
+  async download({name}){
+    if (typeof(name)!=='string') throw new Error("name[string] required");
+    const pair = handlers.find(([ext])=>(name.endsWith(ext)));
+    if (pair){
+      const [ext, method] = pair; // eslint-disable-line no-unused-vars
+      const response = await fetch(this.url+name);
+      if (response.ok){
+        const result = await response[method]();
+        if (typeof(result)==='object')
+          expectSafeObject(result);
+        return result;
+      }
+      throw new Error(`download failed for ${name}`);
+    }
+    throw new Error(`download unimplemented for ${name}`);
+  }
+}
+
+
 export async function listStudyFolders(name){
   const url = baseURL+manifestFilename;
   const response = await fetch(url);
@@ -43,35 +76,3 @@ export async function listStudyFolders(name){
 }
 
 
-export class StudyFolderForWeb extends StudyFolder {
-
-  async search(name){
-    if (!this.manifest){
-       this.manifest = await this.download({name: manifestFilename});
-    }
-    if (name===undefined){
-      return this.manifest;
-    }
-    const entry = this.manifest.find((entry)=>(entry.name===name));
-    if (entry)
-      return [entry];
-    return [];
-  }
-
-  async download({name}){
-    if (typeof(name)!=='string') throw new Error("name[string] required");
-    const pair = handlers.find(([ext])=>(name.endsWith(ext)));
-    if (pair){
-      const [ext, method] = pair;
-      const response = await fetch(this.url+name);
-      if (response.ok){
-        const result = await response[method]();
-        if (typeof(result)==='object')
-          expectSafeObject(result);
-        return result;
-      }
-      throw new Error(`download failed for ${name}`);
-    }
-    throw new Error(`download unimplemented for ${name}`);
-  }
-}

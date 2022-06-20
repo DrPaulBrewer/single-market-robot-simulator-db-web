@@ -5,3 +5,5 @@ node_modules
 test-storage.json
 test/data
 test
+.idea
+coverage
