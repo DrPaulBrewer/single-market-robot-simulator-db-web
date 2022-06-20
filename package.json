@@ -1,0 +1,28 @@
+{
+  "name": "single-market-robot-simulator-db-web",
+  "version": "0.1.0",
+  "description": "readonly study folder class for web-based collections of study folders",
+  "exports": "./src/index.mjs",
+  "scripts": {
+    "lint": "node_modules/.bin/eslint src/**.mjs",
+    "test": "c8 --reporter=text mocha  --slow 50 --timeout 60000",
+    "go": "npm run lint && npm run test && npm run doc"
+  },
+  "author": "drpaulbrewer@eaftc.com",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drpaulbrewer/single-market-robot-simulator-db-web"
+  },
+  "devDependencies": {
+    "c8": "^7.11.2",
+    "eslint": "^8.14.0",
+    "finalhandler": "^1.2.0",
+    "mocha": "^10.0.0",
+    "serve-static": "^1.15.0",
+    "should": "^13.2.3"
+  },
+  "dependencies": {
+    "single-market-robot-simulator-db-studyfolder": "^3.1.0"
+  }
+}
