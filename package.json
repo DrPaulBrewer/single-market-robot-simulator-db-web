@@ -1,6 +1,6 @@
 {
   "name": "single-market-robot-simulator-db-web",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "readonly study folder class for web-based collections of study folders",
   "exports": "./src/index.mjs",
   "scripts": {
