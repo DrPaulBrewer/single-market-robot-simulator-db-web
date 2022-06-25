@@ -7,7 +7,7 @@ const handlers = [
   ['json','json'],
   ['txt','text'],
   ['md','text'],
-  ['zip','blob']
+  ['zip',null]
 ];
 
 let baseURL = '/';
@@ -41,7 +41,7 @@ export class StudyFolderForWeb extends StudyFolder {
       const [ext, method] = pair; // eslint-disable-line no-unused-vars
       const response = await fetch(this.url+name);
       if (response.ok){
-        const result = await response[method]();
+        const result = (method===null)? response: await response[method]();
         if (typeof(result)==='object')
           expectSafeObject(result);
         return result;
