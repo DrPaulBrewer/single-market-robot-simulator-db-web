@@ -7,7 +7,7 @@ const handlers = [
   ['json','json'],
   ['txt','text'],
   ['md','text'],
-  ['zip',null]
+  ['zip','arrayBuffer']
 ];
 
 let baseURL = '/';
